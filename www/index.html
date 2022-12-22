@@ -2,127 +2,133 @@
 <html>
 
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-  <meta http-equiv="Content-Security-Policy" content="default-src * data: gap: content: https://ssl.gstatic.com; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'">
-  <script src="components/loader.js"></script>
-  <link rel="stylesheet" href="components/loader.css">
-  <link rel="stylesheet" href="css/style.css">
-  <script src="keys.js"></script>
-  <script>
-    let ncmb = new NCMB(appKey, clientKey);
-    let UTdata = ncmb.DataStore("UpdateTest");
-    let key = "score";
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta http-equiv="Content-Security-Policy" content="default-src * data: gap: content: https://ssl.gstatic.com; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'">
+    <script src="components/loader.js"></script>
+    <link rel="stylesheet" href="components/loader.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="keys.js"></script>
+    <script>
+        let ncmb = new NCMB(appKey, clientKey);
+        let iTems = ncmb.DataStore("Items");
 
-    function enterData() {
-      let uTdata = new UTdata();
-      let value = parseInt($("#data").val());
-      uTdata.set(key, value)
-        .save()
-        .then(function(results) {
-          $("#display").removeClass();
-          $("#display").addClass("bg-success");
-          $("#display").html("enter success");
-        })
-        .catch(function(results) {
-          $("#display").removeClass();
-          $("#display").addClass("bg-warning");
-          $("#display").html("enter fail");
-        })
-    }
+        function enterData() {
+            let items = new Items();
+            let value = parseInt($("#data").val());
+            items.set(key, value)
+                .save()
+                .then(function(results) {
+                    $("#display").removeClass();
+                    $("#display").addClass("bg-success");
+                    $("#display").html("enter success");
+                })
+                .catch(function(results) {
+                    $("#display").removeClass();
+                    $("#display").addClass("bg-warning");
+                    $("#display").html("enter fail");
+                })
+        }
 
-    function fetchAll() {
-      UTdata.fetchAll()
-        .then(function(results) {
-          let msg = "";
-          for (let i = 0; i < results.length; i++) {
-            msg += results[i].get(key) + "<br>";
-          }
-          $("#display").removeClass();
-          $("#display").addClass("text-light");
-          $("#display").addClass("bg-primary");
-          $("#display").html(msg);
-        })
-        .catch(function(error) {
-          $("#display").removeClass();
-          $("#display").addClass("bg-warning");
-          $("#display").html("delete fail:" + JSON.stringify(error));
-        })
-    }
+        function fetchAll() {
+            Items.fetchAll()
+                .then(function(results) {
+                    let msg = "";
+                    for (let i = 0; i < results.length; i++) {
+                        msg += results[i].get(key) + "<br>";
+                    }
+                    $("#display").removeClass();
+                    $("#display").addClass("text-light");
+                    $("#display").addClass("bg-primary");
+                    $("#display").html(msg);
+                })
+                .catch(function(error) {
+                    $("#display").removeClass();
+                    $("#display").addClass("bg-warning");
+                    $("#display").html("delete fail:" + JSON.stringify(error));
+                })
+        }
 
-    function sortData() {
-      //.order("score",true)
-      UTdata.order(key, true).fetchAll()
-        .then(function(results) {
-          let msg = "";
-          for (let i = 0; i < results.length; i++) {
-            msg += results[i].get(key) + "<br>";
-          }
-          $("#display").removeClass();
-          $("#display").addClass("text-light");
-          $("#display").addClass("bg-primary");
-          $("#display").html(msg);
-        })
-        .catch(function(error) {
-          $("#display").removeClass();
-          $("#display").addClass("bg-warning");
-          $("#display").html("delete fail:" + JSON.stringify(error));
-        })
-    }
+        function sortData() {
+            //.order("score",true)
+            Items.order(key, true).fetchAll()
+                .then(function(results) {
+                    let msg = "";
+                    for (let i = 0; i < results.length; i++) {
+                        msg += results[i].get(key) + "<br>";
+                    }
+                    $("#display").removeClass();
+                    $("#display").addClass("text-light");
+                    $("#display").addClass("bg-primary");
+                    $("#display").html(msg);
+                })
+                .catch(function(error) {
+                    $("#display").removeClass();
+                    $("#display").addClass("bg-warning");
+                    $("#display").html("delete fail:" + JSON.stringify(error));
+                })
+        }
 
-    function countData() {
-      $("#display").html("count does not work");
-    }
+        function countData() {
+            $("#display").html("count does not work");
+        }
 
-    function deleteData() {
-      UTdata.fetchAll()
-        .then(function(results) {
-          return results[0].delete();
-        })
-        .then(function(results) {
-          console.log("success");
-        })
-        .catch(function(error){
-          console.log("error");
-        })
-    }
+        function deleteData() {
+            Items.fetchAll()
+                .then(function(results) {
+                    return results[0].delete();
+                })
+                .then(function(results) {
+                    console.log("success");
+                })
+                .catch(function(error) {
+                    console.log("error");
+                })
+        }
 
-    function updateData() {
-      let value = parseInt($("#update").val());
-      UTdata.fetch()
-        .then(function(result) {
-          result.set("score", value);
-          return result.update();
-        })
-        .then(function(results) {
-          console.log("success");
-        })
-        .catch(function(error){
-          console.log("error");
-        })
-    }
-  </script>
+        function updateData() {
+            let value = parseInt($("#update").val());
+            Items.fetch()
+                .then(function(result) {
+                    result.set("score", value);
+                    return result.update();
+                })
+                .then(function(results) {
+                    console.log("success");
+                })
+                .catch(function(error) {
+                    console.log("error");
+                })
+        }
+    </script>
 </head>
 
 <body>
-  <h1 class="text-light bg-secondary">mbaas update</h1>
-  <div>
-    <input type="text" id="data" placeholder="スコア">
-    <a onclick="enterData()" class="btn btn-outline-secondary" role="button">Enter</a>
-  </div>
-  <div>
-    <a onclick="fetchAll()" class="btn btn-outline-secondary" role="buton">Fetch All</a>
-    <a onclick="sortData()" class="btn btn-outline-primary" role="button">Sort</a>
-    <a onclick="countData()" class="btn btn-outline-primary" role="button">Count</a>
-    <a onclick="deleteData()" class="btn btn-outline-primary" role="buton">Delete</a>
-  </div>
-  <div>
-    <input type="text" id="update" placeholder="更新">
-    <a onclick="updateData()" class="btn btn-outline-primary" role="button">Update</a>
-  </div>
-  <div id="display" class="text-light bg-info">
-    Results
-  </div>
+    <h1 class="text-light bg-secondary">EC app</h1>
+    <div>
+        <p>商品名と価格と在庫数を入れて出品</p>
+        <input type="text" id="item_name" placeholder="商品名" size=12>
+        <input type="number" id="price" step="100" value="100" min="100" max="1000" size=4>
+        <input type="number" id="stock" step="1" value="1" min="1" max="10" size=4>
+        <a onclick="addItem()" class="btn btn-outline-secondary" role="button">出品</a>
+    </div>
+    <div>
+        <input type="text" id="data" placeholder="スコア">
+        <a onclick="enterData()" class="btn btn-outline-secondary" role="button">Enter</a>
+    </div>
+    <div>
+        <a onclick="fetchAll()" class="btn btn-outline-secondary" role="buton">Fetch All</a>
+        <a onclick="sortData()" class="btn btn-outline-primary" role="button">Sort</a>
+        <a onclick="countData()" class="btn btn-outline-primary" role="button">Count</a>
+        <a onclick="deleteData()" class="btn btn-outline-primary" role="buton">Delete</a>
+    </div>
+    <div>
+        <input type="text" id="update" placeholder="更新">
+        <a onclick="updateData()" class="btn btn-outline-primary" role="button">Update</a>
+    </div>
+    <div id="display" class="text-light bg-info">
+        Results
+    </div>
 </body>
 
 </html>
