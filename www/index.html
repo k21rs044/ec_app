@@ -20,110 +20,113 @@
                 var item_name = results[i].get("item_name");
                 var price = results[i].get("price");
                 var stock = results[i].get("stock");
-                msg += "<tr><td>"+ key + "</td><td>"+ item_name + "</td></tr>" + price  + "</td></tr>" stock + "</td></tr>";
+                msg += "<tr><td>" + key + "</td><td>" + item_name + "</td></tr>" + price + "</td></tr>"
+                stock + "</td></tr>";
             }
             msg += "</table>";
+            $("#list").html(msg);
+        }
 
-            function addItem() {
-                let items = new Items();
-                let item_name = $("#item_name").val();
-                let price = parseInt($("#price").val());
-                let stock = parseInt($("#stock").val());
+        function addItem() {
+            let items = new Items();
+            let item_name = $("#item_name").val();
+            let price = parseInt($("#price").val());
+            let stock = parseInt($("#stock").val());
 
-                Items.fetchAll()
-                    .then(function(results) {
-                        let key = results.length;
-                        items.set("key", key)
-                            .set("item_name", item_name)
-                            .set("price", price)
-                            .set("stock", stock)
-                            .save()
-                            .then(function(results) {
-                                $("#display").removeClass();
-                                $("#display").addClass("bg-success");
-                                $("#display").html("enter success");
-                            })
-                            .catch(function(results) {
-                                $("#display").removeClass();
-                                $("#display").addClass("bg-warning");
-                                $("#display").html("enter fail");
-                            })
-                    })
-                    .catch(function(error) {
-                        $("#display").html("fetch error!!");
-                    })
-            }
+            Items.fetchAll()
+                .then(function(results) {
+                    let key = results.length;
+                    items.set("key", key)
+                        .set("item_name", item_name)
+                        .set("price", price)
+                        .set("stock", stock)
+                        .save()
+                        .then(function(results) {
+                            $("#display").removeClass();
+                            $("#display").addClass("bg-success");
+                            $("#display").html("enter success");
+                        })
+                        .catch(function(results) {
+                            $("#display").removeClass();
+                            $("#display").addClass("bg-warning");
+                            $("#display").html("enter fail");
+                        })
+                })
+                .catch(function(error) {
+                    $("#display").html("fetch error!!");
+                })
+        }
 
-            function fetchAll() {
-                Items.fetchAll()
-                    .then(function(results) {
-                        let msg = "";
-                        for (let i = 0; i < results.length; i++) {
-                            msg += results[i].get(key) + "<br>";
-                        }
-                        $("#display").removeClass();
-                        $("#display").addClass("text-light");
-                        $("#display").addClass("bg-primary");
-                        $("#display").html(msg);
-                    })
-                    .catch(function(error) {
-                        $("#display").removeClass();
-                        $("#display").addClass("bg-warning");
-                        $("#display").html("delete fail:" + JSON.stringify(error));
-                    })
-            }
+        function fetchAll() {
+            Items.fetchAll()
+                .then(function(results) {
+                    let msg = "";
+                    for (let i = 0; i < results.length; i++) {
+                        msg += results[i].get(key) + "<br>";
+                    }
+                    $("#display").removeClass();
+                    $("#display").addClass("text-light");
+                    $("#display").addClass("bg-primary");
+                    $("#display").html(msg);
+                })
+                .catch(function(error) {
+                    $("#display").removeClass();
+                    $("#display").addClass("bg-warning");
+                    $("#display").html("delete fail:" + JSON.stringify(error));
+                })
+        }
 
-            function sortData() {
-                //.order("score",true)
-                Items.order(key, true).fetchAll()
-                    .then(function(results) {
-                        let msg = "";
-                        for (let i = 0; i < results.length; i++) {
-                            msg += results[i].get(key) + "<br>";
-                        }
-                        $("#display").removeClass();
-                        $("#display").addClass("text-light");
-                        $("#display").addClass("bg-primary");
-                        $("#display").html(msg);
-                    })
-                    .catch(function(error) {
-                        $("#display").removeClass();
-                        $("#display").addClass("bg-warning");
-                        $("#display").html("delete fail:" + JSON.stringify(error));
-                    })
-            }
+        function sortData() {
+            //.order("score",true)
+            Items.order(key, true).fetchAll()
+                .then(function(results) {
+                    let msg = "";
+                    for (let i = 0; i < results.length; i++) {
+                        msg += results[i].get(key) + "<br>";
+                    }
+                    $("#display").removeClass();
+                    $("#display").addClass("text-light");
+                    $("#display").addClass("bg-primary");
+                    $("#display").html(msg);
+                })
+                .catch(function(error) {
+                    $("#display").removeClass();
+                    $("#display").addClass("bg-warning");
+                    $("#display").html("delete fail:" + JSON.stringify(error));
+                })
+        }
 
-            function countData() {
-                $("#display").html("count does not work");
-            }
+        function countData() {
+            $("#display").html("count does not work");
+        }
 
-            function deleteData() {
-                Items.fetchAll()
-                    .then(function(results) {
-                        return results[0].delete();
-                    })
-                    .then(function(results) {
-                        console.log("success");
-                    })
-                    .catch(function(error) {
-                        console.log("error");
-                    })
-            }
+        function deleteData() {
+            Items.fetchAll()
+                .then(function(results) {
+                    return results[0].delete();
+                })
+                .then(function(results) {
+                    console.log("success");
+                })
+                .catch(function(error) {
+                    console.log("error");
+                })
+        }
 
-            function updateData() {
-                let value = parseInt($("#update").val());
-                Items.fetch()
-                    .then(function(result) {
-                        result.set("score", value);
-                        return result.update();
-                    })
-                    .then(function(results) {
-                        console.log("success");
-                    })
-                    .catch(function(error) {
-                        console.log("error");
-                    })
-            }
+        function updateData() {
+            let value = parseInt($("#update").val());
+            Items.fetch()
+                .then(function(result) {
+                    result.set("score", value);
+                    return result.update();
+                })
+                .then(function(results) {
+                    console.log("success");
+                })
+                .catch(function(error) {
+                    console.log("error");
+                })
+        }
     </script>
 </head>
 
@@ -158,6 +161,7 @@
     <div id="display" class="text-light bg-info">
         Results
     </div>
+    <div id="list">list</div>
 </body>
 
 </html>
