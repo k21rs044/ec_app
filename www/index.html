@@ -80,43 +80,6 @@
                 })
         }
 
-        function sortData() {
-            //.order("score",true)
-            Items.order(key, true).fetchAll()
-                .then(function(results) {
-                    let msg = "";
-                    for (let i = 0; i < results.length; i++) {
-                        msg += results[i].get(key) + "<br>";
-                    }
-                    $("#display").removeClass();
-                    $("#display").addClass("text-light");
-                    $("#display").addClass("bg-primary");
-                    $("#display").html(msg);
-                })
-                .catch(function(error) {
-                    $("#display").removeClass();
-                    $("#display").addClass("bg-warning");
-                    $("#display").html("delete fail:" + JSON.stringify(error));
-                })
-        }
-
-        function countData() {
-            $("#display").html("count does not work");
-        }
-
-        function deleteData() {
-            Items.fetchAll()
-                .then(function(results) {
-                    return results[0].delete();
-                })
-                .then(function(results) {
-                    console.log("success");
-                })
-                .catch(function(error) {
-                    console.log("error");
-                })
-        }
-
         function updateData() {
             let value = parseInt($("#update").val());
             Items.fetch()
@@ -131,6 +94,7 @@
                     console.log("error");
                 })
         }
+
     </script>
 </head>
 
@@ -150,18 +114,6 @@
         <input type="number" id="item_id" step="1" value="1" min="1" size=1>
         <a onclick="buyItem()" class="btn btn-outline-secondary" role="button">購入</a>
     </div>
-    <!--
-    <div>
-        <a onclick="fetchAll()" class="btn btn-outline-secondary" role="buton">Fetch All</a>
-        <a onclick="sortData()" class="btn btn-outline-primary" role="button">Sort</a>
-        <a onclick="countData()" class="btn btn-outline-primary" role="button">Count</a>
-        <a onclick="deleteData()" class="btn btn-outline-primary" role="buton">Delete</a>
-    </div>
-    <div>
-        <input type="text" id="update" placeholder="更新">
-        <a onclick="updateData()" class="btn btn-outline-primary" role="button">Update</a>
-    </div>
-    -->
     <div id="display" class="text-light bg-info">
         Results
     </div>
