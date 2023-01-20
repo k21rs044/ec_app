@@ -11,11 +11,51 @@
     <script src="keys.js"></script>
     <script>
         let ncmb = new NCMB(appKey, clientKey);
-        let iTems = ncmb.DataStore("Items");
+        let Items = ncmb.DataStore("Items");
+
+        function addItem() {
+            let items = new Items();
+            let item_name = $("#item_name").val();
+            let price = parseInt($("#price").val());
+            let stock = parseInt($("#stock").val());
+            var key = "";
+
+            Items.fetchAll()
+                .then(function(results) {
+                    key = String(results.length);
+                })
+                .catch(function(error) {
+                    key = "1";
+                })
+            items.set(key, item_name, price, stock)
+                .save()
+                .then(function(results) {
+                    $("#display").removeClass();
+                    $("#display").addClass("bg-success");
+                    $("#display").html("enter success");
+                })
+                .catch(function(results) {
+                    $("#display").removeClass();
+                    $("#display").addClass("bg-warning");
+                    $("#display").html("enter fail");
+                })
+        }
 
         function enterData() {
             let items = new Items();
-            let value = parseInt($("#data").val());
+            let item_name = $("#item_name").val();
+            let price = parseInt($("#price").val());
+            let stock = parseInt($("#stock").val());
+            var key = 0;
+
+            Items.fetchAll()
+                .then(function(results) {
+                    key = results.length;
+                })
+                .catch(function(error) {
+                    $("#display").html("fetch error!!");
+                })
+            
             items.set(key, value)
                 .save()
                 .then(function(results) {
