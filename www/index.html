@@ -61,23 +61,36 @@
                 })
         }
 
-        function fetchAll() {
-            Items.fetchAll()
-                .then(function(results) {
-                    let msg = "";
-                    for (let i = 0; i < results.length; i++) {
-                        msg += results[i].get(key) + "<br>";
-                    }
-                    $("#display").removeClass();
-                    $("#display").addClass("text-light");
-                    $("#display").addClass("bg-primary");
-                    $("#display").html(msg);
-                })
-                .catch(function(error) {
-                    $("#display").removeClass();
-                    $("#display").addClass("bg-warning");
-                    $("#display").html("delete fail:" + JSON.stringify(error));
-                })
+        function searchItems() {
+            let search_word = $("#data").val();
+            if (search_word == "") {
+                Items.fetchAll()
+                    .then(function(results) {
+                        $("#display").removeClass();
+                        $("#display").addClass("text-light");
+                        $("#display").addClass("bg-primary");
+                        viewList(results);
+                    })
+                    .catch(function(error) {
+                        $("#display").removeClass();
+                        $("#display").addClass("bg-warning");
+                        $("#display").html("delete fail:" + JSON.stringify(error));
+                    })
+            } else {
+                Items.equalTo("item_name", search_word)
+                    .fetchAll()
+                    .then(function(results) {
+                        $("#display").removeClass();
+                        $("#display").addClass("text-light");
+                        $("#display").addClass("bg-primary");
+                        viewList(results);
+                    })
+                    .catch(function(error) {
+                        $("#display").removeClass();
+                        $("#display").addClass("bg-warning");
+                        $("#display").html("delete fail:" + JSON.stringify(error));
+                    })
+            }
         }
 
         function updateData() {
@@ -94,7 +107,6 @@
                     console.log("error");
                 })
         }
-
     </script>
 </head>
 
@@ -110,7 +122,7 @@
     <div>
         <p>商品名で検索して購入</p>
         <input type="text" id="data" placeholder="商品名で検索">
-        <a onclick="fetchItems()" class="btn btn-outline-secondary" role="button">検索</a>
+        <a onclick="searchItems()" class="btn btn-outline-secondary" role="button">検索</a>
         <input type="number" id="item_id" step="1" value="1" min="1" size=1>
         <a onclick="buyItem()" class="btn btn-outline-secondary" role="button">購入</a>
     </div>
