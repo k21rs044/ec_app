@@ -140,6 +140,7 @@
                     console.log("error");
                 })
         }
+
     </script>
 </head>
 
@@ -155,7 +156,7 @@
     <div>
         <p>商品名で検索して購入</p>
         <input type="text" id="data" placeholder="商品名で検索">
-        <a onclick="enterData()" class="btn btn-outline-secondary" role="button">検索</a>
+        <a onclick="fetchItems()" class="btn btn-outline-secondary" role="button">検索</a>
         <input type="number" id="item_id" step="1" value="1" min="1" size=1>
         <a onclick="buyItem()" class="btn btn-outline-secondary" role="button">購入</a>
     </div>
