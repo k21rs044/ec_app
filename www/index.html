@@ -109,18 +109,29 @@
                 })
         }
 
-        function updateData() {
-            let value = parseInt($("#update").val());
-            Items.fetch()
+        function buyItem() {
+            let value = parseInt($("#item_id").val());
+            Items.equalTo("key", value)
+                .fetch()
                 .then(function(result) {
-                    result.set("score", value);
-                    return result.update();
-                })
-                .then(function(results) {
-                    console.log("success");
+                    //console.log(result);
+                    let stock = result.stock; //stockの要素を取得
+                    if (stock > 0) {
+                        result.set("stock", stock - 1);
+                        $("#display").removeClass();
+                        $("#display").addClass("bg-success");
+                        $("#display").html("buy success");
+                        return result.update();
+                    } else {
+                        $("#display").removeClass();
+                        $("#display").addClass("bg-warning");
+                        $("#display").html("Haven't stock item");
+                    }
                 })
                 .catch(function(error) {
-                    console.log("error");
+                    $("#display").removeClass();
+                    $("#display").addClass("bg-warning");
+                    $("#display").html("error");
                 })
         }
     </script>
