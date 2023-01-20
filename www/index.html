@@ -136,9 +136,12 @@
         <a onclick="addItem()" class="btn btn-outline-secondary" role="button">出品</a>
     </div>
     <div>
-        <p>商品名で検索して購入</p>
+        <p>商品名で検索</p>
         <input type="text" id="data" placeholder="商品名で検索">
-        <a onclick="searchItems()" class="btn btn-outline-secondary" role="button">検索</a>
+        <a onclick="searchItems()" class="btn btn-outline-secondary" role="button">検索</a><br>
+        <p>在庫がある商品を表示</p>
+        <a onclick="fetchCanBuyItems()" class="btn btn-outline-secondary" role="button">表示</a><br>
+        <p>検索からidを指定して購入する</p>
         <input type="number" id="item_id" step="1" value="1" min="1" size=1>
         <a onclick="buyItem()" class="btn btn-outline-secondary" role="button">購入</a>
     </div>
