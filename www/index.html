@@ -93,6 +93,22 @@
             }
         }
 
+        function fetchCanBuyItems() {
+            Items.greaterThanOrEqualTo("stock", 1)
+                .fetchAll()
+                .then(function(results) {
+                    $("#display").removeClass();
+                    $("#display").addClass("text-light");
+                    $("#display").addClass("bg-primary");
+                    viewList(results);
+                })
+                .catch(function(error) {
+                    $("#display").removeClass();
+                    $("#display").addClass("bg-warning");
+                    $("#display").html("delete fail:" + JSON.stringify(error));
+                })
+        }
+
         function updateData() {
             let value = parseInt($("#update").val());
             Items.fetch()
