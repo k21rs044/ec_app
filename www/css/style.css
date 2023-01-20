@@ -1,2 +1,16 @@
 /**/
 
+#list {
+  border-style: solid;
+  border-color: skyblue;
+  
+}
+
+table {
+  border-collapse: collapse;
+}
+
+th, td {
+  border: solid;
+  border-width: thin;
+}
