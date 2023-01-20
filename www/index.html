@@ -148,13 +148,16 @@
     <div>
         <p>商品名と価格と在庫数を入れて出品</p>
         <input type="text" id="item_name" placeholder="商品名" size=12>
-        <input type="number" id="price" step="100" value="100" min="100" max="1000" size=4>
-        <input type="number" id="stock" step="1" value="1" min="1" max="10" size=4>
+        <input type="number" id="price" step="100" value="100" min="100" max="1000" size=3>
+        <input type="number" id="stock" step="1" value="1" min="1" max="100" size=3>
         <a onclick="addItem()" class="btn btn-outline-secondary" role="button">出品</a>
     </div>
     <div>
-        <input type="text" id="data" placeholder="スコア">
-        <a onclick="enterData()" class="btn btn-outline-secondary" role="button">Enter</a>
+        <p>商品名で検索して購入</p>
+        <input type="text" id="data" placeholder="商品名で検索">
+        <a onclick="enterData()" class="btn btn-outline-secondary" role="button">検索</a>
+        <input type="number" id="item_id" step="1" value="1" min="1" size=1>
+        <a onclick="buyItem()" class="btn btn-outline-secondary" role="button">購入</a>
     </div>
     <div>
         <a onclick="fetchAll()" class="btn btn-outline-secondary" role="buton">Fetch All</a>
